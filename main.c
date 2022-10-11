@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <math.h>
 
 //#include "bits/mathcalls.h"
@@ -33,11 +34,23 @@ int main(void)
     //    putchar((i % winWidth) ? buffer[i] : '\n');
     //}
 
+    /*while (1)
+    {
+        printf("\x1b[2J");
+        printf("\x1b[H");
+        for (int i = 0; i < winHeight * winWidth; i++)
+        {
+            putchar((i % winWidth) ? buffer[i] : '\n');
+        }
+        sleep(1);
+    }*/
+
     while (1)
     {
         osc = 0;
         while (osc < 1)
         {
+            printf("\x1b[2J");
             Ypos = sin(osc) * winHeight;
             if (Ypos - (double)Ycurrpos > 1)
             {
@@ -61,16 +74,18 @@ int main(void)
                 }
             }
 
-            printf("\x1b[2J");
+            printf("\x1b[H");
             for (int i = 0; i < winHeight * winWidth; i++)
             {
                 putchar((i % winWidth) ? buffer[i] : '\n');
             }
             osc += STEP;
             Yoffset = 0;
+            sleep(1);
         }
         while (Ypos > 0)
         {
+            printf("\x1b[2J");
             Ypos = sin(osc) * winHeight;
             if ((double)Ycurrpos - Ypos > 1)
             {
@@ -92,9 +107,10 @@ int main(void)
                         osc = 1;
                     }
                 }
+                sleep(1);
             }
 
-            printf("\x1b[2J");
+            printf("\x1b[H");
             for (int i = 0; i < winHeight * winWidth; i++)
             {
                 putchar((i % winWidth) ? buffer[i] : '\n');
